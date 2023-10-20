@@ -5,17 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+    }
+    #game{
+        box-shadow: 1px 1px 12px 0 rgba(0,0,0,0.5);
+        border-radius: 6px;
+    }
+</style>
 <body>
     <div class="container" id="container">
         <canvas id="game"></canvas>
     </div>
     <script>
         const canvas = document.getElementById('game');
+        canvas.width = 800;
+        canvas.height = 600;
         const ctx = canvas.getContext('2d');
+        const cloudOne = new Image();
+        cloudOne.src = './cloud1.png'
+        const cloudTwo = new Image();
+        cloudTwo.src = './cloud2.png'
         let $={
             gameStated: false,
             trees: undefined,
             backgroundTrees: undefined,
+            clouds: undefined,
+            backgroundClouds: undefined,
         }
         resetGame();
         function resetGame(){
@@ -39,7 +61,7 @@
         }
         function drawBackgroundTree(x,color){
             ctx.save();
-            ctx.translate(x, 0);
+            ctx.translate(x, canvas.height - 110);
             ctx.fillStyle = color;
             ctx.fillRect(0, 0, 10, 100);
             ctx.fill();
