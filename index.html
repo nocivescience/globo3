@@ -10,6 +10,8 @@
         <canvas id="game"></canvas>
     </div>
     <script>
+        const canvas = document.getElementById('game');
+        const ctx = canvas.getContext('2d');
         let $={
             gameStated: false,
             trees: undefined,
@@ -17,10 +19,10 @@
         }
         resetGame();
         function resetGame(){
-            const lastTree = $.backgroundTrees[$.backgroundTrees.length - 1];
-            let furthestX = lastTree ? lastTree.x : 0;
             $.trees = [];
             $.backgroundTrees = [];
+            const lastTree = $.backgroundTrees[$.backgroundTrees.length - 1];
+            let furthestX = lastTree ? lastTree.x : 0;
             const x = 0;
         }
         function generateTree(){
@@ -35,13 +37,30 @@
             const treeColors= ["#6D8821", "#8FAC34", "#98B333"];
             $.backgroundTrees.push({x, treeColors})
         }
+        function drawBackgroundTree(x,color){
+            ctx.save();
+            ctx.translate(x, 0);
+            ctx.fillStyle = color;
+            ctx.fillRect(0, 0, 10, 100);
+            ctx.fill();
+            ctx.restore();
+        }
+        function draw(){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
         function animate(){
-            if(!$.gameStated){
-                return
-            }
+            // if(!$.gameStated){
+            //     return
+            // }
+            draw();
             const velocityChangeWhileHeating = 0.4;
             const velocityChangeWhileCooling = 0.2;
             generateBackgroundTree();
+            $.backgroundTrees.forEach((tree) => {
+                tree.x -= velocityChangeWhileHeating;
+                drawBackgroundTree(tree.x, tree.color);
+            });
+            window.requestAnimationFrame(animate);
         }
         animate();
     </script>
