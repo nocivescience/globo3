@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" id="container">
+        <canvas id="game"></canvas>
+    </div>
+    <script>
+        let $={
+            gameStated: false,
+            trees: undefined,
+            backgroundTrees: undefined,
+        }
+        resetGame();
+        function resetGame(){
+            const lastTree = $.backgroundTrees[$.backgroundTrees.length - 1];
+            let furthestX = lastTree ? lastTree.x : 0;
+            $.trees = [];
+            $.backgroundTrees = [];
+            const x = 0;
+        }
+        function generateTree(){
+
+        }
+        function generateBackgroundTree(){
+            const minimunGap = 30;
+            const maximumGap = 150;
+            const lastTree = $.backgroundTrees[$.backgroundTrees.length - 1];
+            let furthestX = lastTree ? lastTree.x : 0;
+            const x = furthestX + minimunGap + Math.random() * (maximumGap - minimunGap);
+            const treeColors= ["#6D8821", "#8FAC34", "#98B333"];
+            $.backgroundTrees.push({x, treeColors})
+        }
+        function animate(){
+            if(!$.gameStated){
+                return
+            }
+            const velocityChangeWhileHeating = 0.4;
+            const velocityChangeWhileCooling = 0.2;
+            generateBackgroundTree();
+        }
+        animate();
+    </script>
+</body>
+</html>
