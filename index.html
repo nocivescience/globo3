@@ -48,6 +48,65 @@
         treeThree.src = './tree3.png'
         treeFour = new Image();
         treeFour.src = './tree4.png'
+        let _={
+            gameStated: false,
+            trees: undefined,
+            backgroundTrees: undefined,
+            clouds: undefined,
+            backgroundClouds: undefined,
+        }
+        resetGame();
+        function resetGame(){
+            _.trees = [];
+            _.backgroundTrees = [];
+            const lastTree = _.backgroundTrees[_.backgroundTrees.length - 1];
+            let furthestX = lastTree ? lastTree.x : 0;
+            const x = 0;
+        }
+        function generateTree(){
+            const minimunGap = 50;
+            const maximumGap = 600;
+            const x= _.trees.length
+            ? _.trees[_.trees.length - 1].x + minimunGap + Math.floor(Math.random() * (maximumGap - minimunGap))
+            : 400;
+            const h= 60+Math.random()*80;
+            const r1= 32+Math.random()*16;
+            const r2= 32+Math.random()*16;
+            const r3= 32+Math.random()*16;
+            _.trees.push({x,h,r1,r2,r3})
+        }
+        function generateBackgroundTree(){
+            const minimunGap = 30;
+            const maximumGap = 150;
+            const lastTree = _.backgroundTrees[_.backgroundTrees.length - 1];
+            let furthestX = lastTree ? lastTree.x : 0;
+            const x = furthestX + minimunGap + Math.random() * (maximumGap - minimunGap);
+            _.backgroundTrees.push({x})
+        }
+        function drawTrees(x,h,r1,r2,r3){
+            _.trees.forEach(({x,h,r1,r2,r3})=>{
+                ctx.save();
+                ctx.translate(x, canvas.height - h);
+                ctx.drawImage(treeOne, 0, 0, 10, 100);
+                ctx.restore();
+            })
+        }
+        function draw(){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawTrees();
+        }
+        function drawBackgroundTree(x){
+            ctx.save();
+            ctx.translate(x, canvas.height - 110);
+            ctx.drawImage(treeOne, 0, 0, 10, 100);
+            ctx.restore();
+        }
+        function animate(){
+            generateTree();
+            generateBackgroundTree();
+            draw();
+        }
+        animate();
     </script>
 </body>
 </html>
