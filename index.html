@@ -14,6 +14,14 @@
         width: 100vw;
         height: 100vh;
     }
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 800px;
+        height: 600px;
+    }
     #game{
         box-shadow: 1px 1px 12px 0 rgba(0,0,0,0.5);
         border-radius: 6px;
@@ -28,63 +36,18 @@
         canvas.width = 800;
         canvas.height = 600;
         const ctx = canvas.getContext('2d');
-        const cloudOne = new Image();
-        cloudOne.src = './cloud1.png'
-        const cloudTwo = new Image();
-        cloudTwo.src = './cloud2.png'
-        let $={
-            gameStated: false,
-            trees: undefined,
-            backgroundTrees: undefined,
-            clouds: undefined,
-            backgroundClouds: undefined,
-        }
-        resetGame();
-        function resetGame(){
-            $.trees = [];
-            $.backgroundTrees = [];
-            const lastTree = $.backgroundTrees[$.backgroundTrees.length - 1];
-            let furthestX = lastTree ? lastTree.x : 0;
-            const x = 0;
-        }
-        function generateTree(){
-
-        }
-        function generateBackgroundTree(){
-            const minimunGap = 30;
-            const maximumGap = 150;
-            const lastTree = $.backgroundTrees[$.backgroundTrees.length - 1];
-            let furthestX = lastTree ? lastTree.x : 0;
-            const x = furthestX + minimunGap + Math.random() * (maximumGap - minimunGap);
-            const treeColors= ["#6D8821", "#8FAC34", "#98B333"];
-            $.backgroundTrees.push({x, treeColors})
-        }
-        function drawBackgroundTree(x,color){
-            ctx.save();
-            ctx.translate(x, canvas.height - 110);
-            ctx.fillStyle = color;
-            ctx.fillRect(0, 0, 10, 100);
-            ctx.fill();
-            ctx.restore();
-        }
-        function draw(){
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-        function animate(){
-            // if(!$.gameStated){
-            //     return
-            // }
-            draw();
-            const velocityChangeWhileHeating = 0.4;
-            const velocityChangeWhileCooling = 0.2;
-            generateBackgroundTree();
-            $.backgroundTrees.forEach((tree) => {
-                tree.x -= velocityChangeWhileHeating;
-                drawBackgroundTree(tree.x, tree.color);
-            });
-            window.requestAnimationFrame(animate);
-        }
-        animate();
+        const cloudiOne = new Image();
+        cloudiOne.src = './cloud1.png'
+        const cloudiTwo = new Image();
+        cloudiTwo.src = './cloud2.png'
+        treeOne = new Image();
+        treeOne.src = './tree1.png'
+        treeTwo = new Image();
+        treeTwo.src = './tree2.png'
+        treeThree = new Image();
+        treeThree.src = './tree3.png'
+        treeFour = new Image();
+        treeFour.src = './tree4.png'
     </script>
 </body>
 </html>

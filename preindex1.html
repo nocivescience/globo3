@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+    }
+    #game{
+        box-shadow: 1px 1px 12px 0 rgba(0,0,0,0.5);
+        border-radius: 6px;
+    }
+</style>
+<body>
+    <div class="container" id="container">
+        <canvas id="game"></canvas>
+    </div>
+    <script>
+        const canvas = document.getElementById('game');
+        canvas.width = 800;
+        canvas.height = 600;
+        const ctx = canvas.getContext('2d');
+        const cloudOne = new Image();
+        cloudOne.src = './cloud1.png'
+        const cloudTwo = new Image();
+        cloudTwo.src = './cloud2.png'
+        let $={
+            gameStated: false,
+            trees: undefined,
+            backgroundTrees: undefined,
+            clouds: undefined,
+            backgroundClouds: undefined,
+        }
+        resetGame();
+        function resetGame(){
+            $.trees = [];
+            $.backgroundTrees = [];
+            const lastTree = $.backgroundTrees[$.backgroundTrees.length - 1];
+            let furthestX = lastTree ? lastTree.x : 0;
+            const x = 0;
+        }
+        function generateTree(){
+
+        }
+        function generateBackgroundTree(){
+            const minimunGap = 30;
+            const maximumGap = 150;
+            const lastTree = $.backgroundTrees[$.backgroundTrees.length - 1];
+            let furthestX = lastTree ? lastTree.x : 0;
+            const x = furthestX + minimunGap + Math.random() * (maximumGap - minimunGap);
+            const treeColors= ["#6D8821", "#8FAC34", "#98B333"];
+            $.backgroundTrees.push({x, treeColors})
+        }
+        function drawBackgroundTree(x,color){
+            ctx.save();
+            ctx.translate(x, canvas.height - 110);
+            ctx.fillStyle = color;
+            ctx.fillRect(0, 0, 10, 100);
+            ctx.fill();
+            ctx.restore();
+        }
+        function draw(){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        function animate(){
+            // if(!$.gameStated){
+            //     return
+            // }
+            draw();
+            const velocityChangeWhileHeating = 0.4;
+            const velocityChangeWhileCooling = 0.2;
+            generateBackgroundTree();
+            $.backgroundTrees.forEach((tree) => {
+                tree.x -= velocityChangeWhileHeating;
+                drawBackgroundTree(tree.x, tree.color);
+            });
+            window.requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
